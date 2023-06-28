@@ -1,0 +1,11 @@
+{
+  "error":[
+      {
+        "code":"XB500",
+        "status":"4XX",
+        "title":"Error Title 1",
+        "detail":"Description of the problem for the app developer with hints about how to fix it."
+      }
+  ]
+   
+}

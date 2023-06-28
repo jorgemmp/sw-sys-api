@@ -1,0 +1,9 @@
+#%RAML 1.0 DataType
+type: object
+description: General API Error Message Schema.
+properties:
+      error:
+        type: array
+        description: The Errors Schema.
+        items:
+          type: !include error-object.raml

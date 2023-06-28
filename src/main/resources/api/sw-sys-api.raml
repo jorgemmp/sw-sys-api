@@ -1,0 +1,27 @@
+#%RAML 1.0
+baseUri: http://localhost:8080/api/sys/
+title: sw-sys-api
+description: Api to retrieve all the caracters of Star Wars.
+version: 1.0.0
+documentation:
+ - title: Guide
+   content: |
+     Star Wars Characters Documentation. This service allow request the basic information for
+     all characters of the Star Wars saga.
+     
+uses:
+  library: library-traits.raml
+
+types:
+  ResponseCharacters: !include examples/ex-response.json
+
+/characters:
+  get:
+    displayName: Get characters
+    description: Retrieve characters of Star Wars saga.
+    is: [library.paramsHeaders, library.errorHandleable]
+    responses:
+      200:
+        body:
+          application/json:
+            type: ResponseCharacters

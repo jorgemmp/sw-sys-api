@@ -1,0 +1,24 @@
+#%RAML 1.0 DataType
+type: object
+description: Simple Error Message Data
+properties: 
+  code:
+    pattern: ^(.*)$
+    default: ''
+    type: string
+    description: The Code Schema
+  status:
+    pattern: ^(.*)$
+    default: ''
+    type: string
+    description: The Status Schema
+  title:
+    pattern: ^(.*)$
+    default: ''
+    type: string
+    description: The Title Schema
+  detail:
+    pattern: ^(.*)$
+    default: ''
+    type: string
+    description: The Detail Schema

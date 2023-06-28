@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "1b2a9419-776a-4d0c-8fd4-f07ad6c0e46a",
+		"name": "sw-sys-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28222855"
+	},
+	"item": [
+		{
+			"name": "Get Characters",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "correlationId",
+						"value": "12345666",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/sys/characters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"sys",
+						"characters"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

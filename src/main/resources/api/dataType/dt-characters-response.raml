@@ -1,0 +1,53 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  name:
+    type: string
+    required: true
+  height:
+    type: string
+    required: true
+  mass:
+    type: string
+    required: true
+  hairColor:
+    type: string
+    required: true
+  skinColor:
+    type: string
+    required: true
+  eyeColor:
+    type: string
+    required: true
+  birthYear:
+    type: string
+    required: true
+  gender:
+    type: string
+    required: true
+  homeworld:
+    type: string
+    required: false
+  films:
+    type: string[]
+    required: true
+  species:
+    type: string[]
+    required: true
+  vehicles:
+    type: string[]
+    required: true    
+  starships:
+    type: string[]
+    required: true
+  created:
+    type: string
+    required: true
+  edited:
+    type: string
+    required: true
+  url:
+    type: string
+    required: true
+  additionalProperties: false
+example: !include ../examples/ex-characters-response.json

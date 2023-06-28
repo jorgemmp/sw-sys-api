@@ -1,0 +1,39 @@
+#%RAML 1.0 Library
+types: 
+  errorMessageSchema: !include dataType/dt-error-object.raml
+
+traits:
+  paramsHeaders:
+    headers:
+      correlationId:
+        type: string
+        displayName: Correlation Id
+        description: Correlation Id
+        example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+        required: false
+  errorHandleable:
+    responses: 
+      400:
+        description: Bad Request.
+        body: 
+          application/json:
+            type: errorMessageSchema
+            example: !include examples/api-error-message.json
+      401:
+        description: Unauthorized.
+        body: 
+          application/json:
+            type: errorMessageSchema
+            example: !include examples/api-error-message.json
+      404:
+        description: Not Found.
+        body: 
+          application/json:
+            type: errorMessageSchema
+            example: !include examples/api-error-message.json
+      500:
+        description: Internal Server Error.
+        body: 
+          application/json:
+            type: errorMessageSchema
+            example: !include examples/api-error-message.json

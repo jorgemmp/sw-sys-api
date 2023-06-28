@@ -1,0 +1,8 @@
+http:
+ port: '8090'
+
+general:
+  path: '/api/sys/*'
+  
+swapi:
+ host: 'https://swapi.dev/api/people'

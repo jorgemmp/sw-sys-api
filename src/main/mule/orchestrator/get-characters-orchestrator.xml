@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="get-characters-orchestratorSub_Flow" doc:id="4ffa12cc-7f3f-45b2-9345-db3a8bbc8c15" >
+		<logger level="INFO" doc:name="Logger" doc:id="26a358ac-4858-418a-bc37-a965ba849d30" message="#['Get Characters Orchestrator - CorrelationId: ' ++ vars.correlationId]"/>
+		<ee:transform doc:name="Characters" doc:id="d898ab41-9bcd-4977-8733-5c577d1e86c9">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="characters"><![CDATA[[]]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<flow-ref doc:name="get-characters-clientSub_Flow" doc:id="84ab9625-4fc2-4cf9-b8d0-879bbedc0106" name="get-characters-clientSub_Flow" />
+		<flow-ref doc:name="get-characters-orchestrator-loop" doc:id="fe111af9-2f44-4f23-bbe4-f8e35ee4b3a5" name="get-characters-orchestrator-loop"/>
+	</sub-flow>
+	<sub-flow name="get-characters-orchestrator-loop" doc:id="6f079e1f-e99d-4c5a-8d58-f94027ba9c9b" >
+		<choice doc:name="Choice" doc:id="aed89f43-10d1-4181-8cac-1f210b0a0237">
+			<when expression="#[payload.next != null]">
+				<ee:transform doc:name="Characters" doc:id="ceb7fc3b-93d8-40b2-a063-efe3439d0037">
+			<ee:message>
+			</ee:message>
+			<ee:variables>
+				<ee:set-variable variableName="characters"><![CDATA[%dw 2.0
+output application/json
+---
+vars.characters << payload.results]]></ee:set-variable>
+				<ee:set-variable variableName="path"><![CDATA[%dw 2.0
+output application/json
+---
+((payload.next as String) splitBy "people")[1]]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+				<flow-ref doc:name="get-characters-clientSub_Flow" doc:id="d86ae1f7-4ed4-4cc0-87e7-d69a2306289f" name="get-characters-clientSub_Flow"/>
+				<flow-ref doc:name="get-characters-orchestrator-loop" doc:id="07ec4d94-a281-4f8c-8916-9d7e185cba3d" name="get-characters-orchestrator-loop"/>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Characters" doc:id="67075903-32e1-4ef1-b32e-ec2754eaac13">
+					<ee:message >
+					</ee:message>
+					<ee:variables>
+						<ee:set-variable variableName="characters"><![CDATA[%dw 2.0
+output application/json
+---
+flatten(vars.characters << payload.results)]]></ee:set-variable>
+					</ee:variables>
+				</ee:transform>
+				<ee:transform doc:name="Prepare Response" doc:id="ac333a6b-2770-4aa8-99eb-e14a356f5c8f">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"results": vars.characters
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<logger level="INFO" doc:name="Logger" doc:id="a40f29e3-a628-414f-8427-6dce9f37980e" message="#['End Get Characters Orchestrator - CorrelationId: ' ++ vars.correlationId]"/>
+			</otherwise>
+		</choice>
+	</sub-flow>
+</mule>
